@@ -564,22 +564,15 @@ def main():
                         t = t[: t.index(0)]
                     text = tokenizer.decode(t, clean_up_tokenization_spaces=False)
                     p.append(text)
-        
+
         # save defects, mean log_probs between beams and predictions
-        with open(
-            os.path.join(args.output_dir, "train.defects"), "w"
-        ) as f:
+        with open(os.path.join(args.output_dir, "train.defects"), "w") as f:
             json.dump(d, f)
-        with open(
-            os.path.join(args.output_dir, "train.log_probs"), "w"
-        ) as f:
+        with open(os.path.join(args.output_dir, "train.log_probs"), "w") as f:
             json.dump(lp, f)
-        with open(
-            os.path.join(args.output_dir, "train.output"), "w"
-        ) as f:
+        with open(os.path.join(args.output_dir, "train.output"), "w") as f:
             for ref, ex in zip(p, train_examples):
                 f.write(str(ex.idx) + "\t" + ref + "\n")
-
 
     if args.do_test:
         files = []

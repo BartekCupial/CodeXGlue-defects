@@ -59,7 +59,25 @@ We also provide a pipeline that fine-tunes [CodeBERT](https://arxiv.org/pdf/2002
 
 ### Fine-tune
 
-One could fine tune model on this dataset. To do this please have a look at https://github.com/microsoft/CodeXGLUE/tree/main/Code-Code/Defect-detection
+```bash
+cd code-ft
+python run.py \
+    --do_train \
+    --model_type roberta \
+    --tokenizer_name microsoft/codebert-base \
+    --model_name_or_path microsoft/codebert-base \
+    --train_filename preprocessed/random/train.csv \
+    --dev_filename preprocessed/random/val.csv \
+    --test_filename preprocessed/random/test.csv
+    --epoch 5 \
+    --block_size 400 \
+    --train_batch_size 32 \
+    --eval_batch_size 64 \
+    --learning_rate 2e-5 \
+    --max_grad_norm 1.0 \
+    --evaluate_during_training \
+    --output_dir model/python 
+```
 
 ### Predict label based on CodeBERT summary of the code
 
@@ -105,9 +123,10 @@ python run.py \
 
 The results on the test set are shown as below:
 
-| Methods  | Precision | Recall | F1 Score |
-| -------- | :-------: |  :-------: |  :-------: |
-| [CodeBERT](https://arxiv.org/pdf/2002.08155.pdf) (based on log-likelihoods) | **0.107** | **0.956** | **0.543** |
+| Methods  | Precision | Recall | F1 Score | Accuracy | 
+| -------- | :-------: |  :-------: |  :-------: | -------: |
+| [CodeBERT](https://arxiv.org/pdf/2002.08155.pdf) (zero-shot from log-likelihoods) | **0.107** | **0.956** | **0.543** |
+| [CodeBERT](https://arxiv.org/pdf/2002.08155.pdf) (finetune on dataset) |  |  |  | **0.729** | 
 
 
 ## Reference
