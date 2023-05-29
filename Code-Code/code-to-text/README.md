@@ -48,9 +48,9 @@ Data statistics of the dataset are shown in the below table:
 
 |       | #Examples | % defective |
 | ----- | :-------: | :---------: |
-| Train |  21,854   |    36.18    |
-| Val   |   2,732   |    10.27    |
-| Test  |   2,732   |    10.18    |
+| Train |  508,089  |    36.18    |
+| Val   |   25,043  |    10.27    |
+| Test  |   23,051  |    10.18    |
 
 
 ## Pipeline-CodeBERT
@@ -125,8 +125,9 @@ The results on the test set are shown as below:
 
 | Methods  | Precision | Recall | F1 Score | Accuracy | 
 | -------- | :-------: |  :-------: |  :-------: | -------: |
-| [CodeBERT](https://arxiv.org/pdf/2002.08155.pdf) (zero-shot from log-likelihoods) | **0.107** | **0.956** | **0.543** |
-| [CodeBERT](https://arxiv.org/pdf/2002.08155.pdf) (finetune on dataset) |  |  |  | **0.729** | 
+| [CodeBERT](https://arxiv.org/pdf/2002.08155.pdf) (zero-shot from log-likelihoods, threshold maximizing f1) | **0.107** | **0.956** | **0.193** | **0.180**
+| [CodeBERT](https://arxiv.org/pdf/2002.08155.pdf) (zero-shot from log-likelihoods, threshold maximizing accuracy) | **0.115** | **0.478** | **0.186** | **0.570**
+| [CodeBERT](https://arxiv.org/pdf/2002.08155.pdf) (finetune on dataset, threshold 0.5) | **0.230** | **0.637** | **0.337** | **0.7682** | 
 
 
 ## Reference

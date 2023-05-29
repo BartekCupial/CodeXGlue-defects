@@ -45,6 +45,7 @@ from torch.utils.data import (
 )
 from torch.utils.data.distributed import DistributedSampler
 import json
+from sklearn.metrics import roc_curve, auc, confusion_matrix, accuracy_score, f1_score, precision_score, recall_score
 
 import datasets
 
@@ -460,9 +461,16 @@ def evaluate(args, model, tokenizer, eval_when_training=False):
     eval_loss = eval_loss / nb_eval_steps
     perplexity = torch.tensor(eval_loss)
 
+    precision = precision_score(labels, preds)
+    recall = recall_score(labels, preds)
+    f1 = f1_score(labels, preds)
+
     result = {
         "eval_loss": float(perplexity),
         "eval_acc": round(eval_acc, 4),
+        "eval_precision": round(precision, 4),
+        "eval_recall": round(recall, 4),
+        "eval_f1": round(f1, 4),
     }
     return result
 
@@ -505,6 +513,7 @@ def test(args, model, tokenizer):
 
     logits = np.concatenate(logits, 0)
     labels = np.concatenate(labels, 0)
+
     preds = logits[:, 0] > 0.5
     with open(os.path.join(args.output_dir, "predictions.txt"), "w") as f:
         for example, pred in zip(eval_dataset.examples, preds):
